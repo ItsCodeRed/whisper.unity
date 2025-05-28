@@ -178,6 +178,17 @@ namespace Whisper
             sw.Start();
             fixed (float* samplesPtr = samples)
             {
+                if (_whisperCtx == IntPtr.Zero)
+                {
+                    LogUtils.Error("Whisper context is null!");
+                    return false;
+                }
+                if (samples == null || samples.Length == 0)
+                {
+                    LogUtils.Error("Audio samples are null or empty!");
+                    return false;
+                }
+                LogUtils.Log($"Samples pointer: {(long)samplesPtr}, Length: {samples.Length}");
                 var code = WhisperNative.whisper_full(_whisperCtx, param, samplesPtr, samples.Length);
                 if (code != 0)
                 {
