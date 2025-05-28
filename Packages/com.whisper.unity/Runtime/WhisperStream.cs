@@ -309,7 +309,7 @@ namespace Whisper
             
             // append current transcription into temporary output
             var res = await _task;
-            var currentSegment = res.Result;
+            var currentSegment = res == null ? "" : res.Result;
             var currentOutput = _output + currentSegment;
 
             // send update to user
